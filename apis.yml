@@ -69,6 +69,8 @@ apis:
       - type: Documentation
         url: https://help.sap.com/docs/SAP_BUSINESSOBJECTS_ANALYSIS_OFFICE
 common:
+  - type: GitHubOrganization
+    url: https://github.com/SAP
   - type: Portal
     url: https://help.sap.com/docs/SAP_BW4HANA
   - type: Documentation
