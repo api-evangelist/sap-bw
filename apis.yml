@@ -69,6 +69,10 @@ apis:
       - type: Documentation
         url: https://help.sap.com/docs/SAP_BUSINESSOBJECTS_ANALYSIS_OFFICE
 common:
+  - type: VulnerabilityDisclosure
+    url: security/sap-bw-vulnerability-disclosure.yml
+  - type: DomainSecurity
+    url: security/sap-bw-domain-security.yml
   - type: GitHubOrganization
     url: https://github.com/SAP
   - type: Portal
