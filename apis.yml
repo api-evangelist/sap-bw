@@ -43,6 +43,11 @@ apis:
     tags:
       - Analytics
       - OData
+      - Query
+      - REST
+    tags_raw:
+      - Analytics
+      - OData
       - Queries
       - REST
     properties:
