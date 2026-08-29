@@ -1,0 +1,69 @@
+generated: '2026-08-29'
+method: searched
+source: >-
+  SAP Help Portal SAP BW/4HANA documentation, searched via
+  help.sap.com/http.svc/elasticsearch (product=SAP_BW4HANA)
+format: odata-error
+rfc9457: false
+description: >-
+  Error semantics for the SAP BW API surfaces. This is a SEARCHED description
+  of the published error model, not a derived catalog - it cannot be derived,
+  because this repo holds no OpenAPI and SAP publishes none for SAP BW. No
+  problem-type registry is published either; the concrete error codes a caller
+  sees are ABAP message-class/number pairs raised by the customer's own
+  system.
+envelopes:
+  - surface: sap-bw:odata-api
+    format: odata-error
+    media_type: application/json | application/xml
+    shape: >-
+      OData error payload: an "error" object carrying "code" and "message",
+      with SAP's "innererror" extension carrying the ABAP message class,
+      message number and severity.
+    note: >-
+      Shape stated from the OData protocol and SAP Gateway's documented
+      behaviour. No SAP-published error reference for BW OData services was
+      found, so no code list is enumerated here.
+  - surface: sap-bw:bapi-api
+    format: bapiret2
+    media_type: null
+    shape: >-
+      Not an HTTP error model. RFC-enabled function modules and BAPIs return a
+      RETURN table of BAPIRET2 structures (TYPE S/I/W/E/A, ID = message class,
+      NUMBER, MESSAGE, plus LOG_NO/LOG_MSG_NO). A caller checks TYPE for
+      E or A rather than an HTTP status.
+    note: >-
+      This is the reason the RFC surface cannot be modelled as HTTP problem
+      types at all - there is no status code.
+  - surface: sap-bw:ina-api
+    format: proprietary
+    media_type: application/json
+    shape: >-
+      InA is a proprietary SAP protocol with no public specification; its
+      error payload is not documented publicly. Recorded as unknown rather
+      than guessed.
+http_statuses:
+  - status: 401
+    meaning: Unauthorized
+    evidence: >-
+      SAP publishes a dedicated troubleshooting page for HTTP 401 on BW
+      surfaces.
+    docs: https://help.sap.com/docs/SUPPORT_CONTENT/bwfe/3354605737.html
+data_layer_error_handling:
+  name: Data Transfer Process error handling
+  description: >-
+    BW's substantive error contract is not at the API layer but at the data
+    layer: a DTP writes erroneous records to the Data Transfer Intermediate
+    Storage (DTIS) so they can be corrected and updated to the target
+    separately, and the DTP's Update tab controls how the system responds to
+    bad records.
+  docs:
+    - https://help.sap.com/docs/SAP_BW4HANA/c785be6ce177492a825d45527a2a389d/42fbd598481e1a61e10000000a422035.html
+    - https://help.sap.com/docs/SAP_BW4HANA/107a6e8a38b74ede94c833ca3b7b6f51/ff7b7fa599914d1db40804eaedb86084.html
+    - https://help.sap.com/docs/SAP_BW4HANA/ee8f1a1acc9f46f39b7c79eef625ada2/42fa1acfcf2c1aa2e10000000a422035.html
+problems: []
+problems_note: >-
+  Empty deliberately. Enumerating problem types would mean inventing them -
+  SAP publishes no error-code reference for SAP BW's API surfaces, and the
+  codes that do appear are message-class identifiers from the customer's own
+  ABAP system.

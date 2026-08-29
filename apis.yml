@@ -34,7 +34,7 @@ image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/sap-bw.png
 url: >-
   https://raw.githubusercontent.com/api-evangelist/sap-bw/refs/heads/main/apis.yml
 created: '2024-01-01'
-modified: '2026-04-18'
+modified: '2026-08-29'
 specificationVersion: '0.23'
 tags:
   - Business Intelligence
@@ -50,7 +50,7 @@ apis:
       and accessing InfoProviders. Supports analytical queries with filtering,
       aggregation, and hierarchical navigation.
     humanURL: https://help.sap.com/docs/SAP_BW4HANA
-    baseURL: https://sap-host/sap/opu/odata/sap/
+    baseURL: https://{sap-bw-host}:{port}/sap/opu/odata/sap/
     tags:
       - Analytics
       - OData
@@ -71,7 +71,7 @@ apis:
       Call (RFC) interfaces for SAP BW providing access to metadata management,
       data loading, process chain execution, and administrative operations.
     humanURL: https://help.sap.com/docs/SAP_BW4HANA
-    baseURL: https://sap-host/sap/bc/
+    baseURL: https://{sap-bw-host}:{port}/sap/bc/
     tags:
       - BAPI
       - Enterprise
@@ -87,7 +87,6 @@ apis:
       of analytical workbooks, data source connections, and report automation
       within Excel and PowerPoint.
     humanURL: https://help.sap.com/docs/SAP_BUSINESSOBJECTS_ANALYSIS_OFFICE
-    baseURL: https://help.sap.com/docs/SAP_BUSINESSOBJECTS_ANALYSIS_OFFICE
     tags:
       - Analysis
       - Excel
@@ -96,7 +95,71 @@ apis:
     properties:
       - type: Documentation
         url: https://help.sap.com/docs/SAP_BUSINESSOBJECTS_ANALYSIS_OFFICE
+  - aid: sap-bw:ina-api
+    name: SAP BW InA API
+    description: >-
+      SAP Information Access (InA) is the REST/HTTP JSON protocol SAP Analytics
+      Cloud and SAP Analysis for Microsoft Office use to query SAP BW data
+      sources in real time over a live connection. SAP documents the ICF
+      service path and the individual services that must be active
+      (BatchProcessing, GetCatalog, GetResponse, GetServerInfo, Logoff,
+      ValueHelp) but publishes no specification for the protocol itself - it
+      is proprietary and undocumented outside SAP.
+    humanURL: >-
+      https://help.sap.com/doc/00f68c2e08b941f081002fd3691d86a7/2023.20/en-US/2f61936f350b423ca6b813da1d5a102f.html
+    baseURL: https://{sap-bw-host}:{port}/sap/bw/ina/
+    tags:
+      - Analytics
+      - InA
+      - Live Connection
+      - REST
+    properties:
+      - type: Documentation
+        url: >-
+          https://help.sap.com/doc/00f68c2e08b941f081002fd3691d86a7/2023.20/en-US/2f61936f350b423ca6b813da1d5a102f.html
 common:
+  - type: Website
+    url: https://www.sap.com/products/data-cloud/business-warehouse.html
+  - type: APIReference
+    url: https://help.sap.com/docs/SAP_BW4HANA/107a6e8a38b74ede94c833ca3b7b6f51/4c22135610cc5791e10000000a15822b.html
+  - type: Packages
+    url: packages/sap-bw-packages.yml
+  - type: SDKs
+    url: packages/sap-bw-packages.yml
+  - type: WellKnown
+    url: well-known/sap-bw-well-known.yml
+  - type: SecurityTxt
+    url: well-known/sap-bw-security.txt
+  - type: Security
+    url: https://www.sap.com/about/trust-center/security/incident-management.html
+  - type: TrustCenter
+    url: security/sap-bw-trust-center.yml
+  - type: Compliance
+    url: https://www.sap.com/about/trust-center/certification-compliance.html
+  - type: Conformance
+    url: conformance/sap-bw-conformance.yml
+  - type: Authentication
+    url: authentication/sap-bw-authentication.yml
+  - type: Conventions
+    url: conventions/sap-bw-conventions.yml
+  - type: ErrorCatalog
+    url: errors/sap-bw-problem-types.yml
+  - type: Lifecycle
+    url: lifecycle/sap-bw-lifecycle.yml
+  - type: StatusPage
+    url: https://www.sap.com/about/trust-center/cloud-service-status.html
+  - type: Deprecation
+    url: https://help.sap.com/doc/16e3352bd6c342ec9fb1cd90adb9fbf4/2.0/en-US/SAP_BW4HANA_20_Simplification_List.pdf
+  - type: ChangeLog
+    url: changelog/sap-bw-changelog.yml
+  - type: LLMsTxt
+    url: llms/sap-bw-llms.txt
+  - type: Plans
+    url: plans/sap-bw-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/sap-bw-rate-limits.yml
+  - type: FinOps
+    url: finops/sap-bw-finops.yml
   - type: VulnerabilityDisclosure
     url: security/sap-bw-vulnerability-disclosure.yml
   - type: DomainSecurity
@@ -112,7 +175,7 @@ common:
   - type: Support
     url: https://support.sap.com/
   - type: Blog
-    url: https://community.sap.com/topics/bw
+    url: https://pages.community.sap.com/topics/bw4-hana
   - type: TermsOfService
     url: https://www.sap.com/about/legal/terms-of-use.html
   - type: PrivacyPolicy
@@ -157,3 +220,10 @@ maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
     url: https://apievangelist.com
+x-enrichment:
+  date: '2026-08-29'
+  status: enriched
+  artifacts_added: 12
+  pass: local-v1
+x-parent: sap
+x-relationship: product

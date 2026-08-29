@@ -1,0 +1,88 @@
+generated: '2026-08-29'
+method: searched
+source: >-
+  help.sap.com product page service (product=SAP_BW4HANA),
+  https://support.sap.com/en/release-upgrade-maintenance.html,
+  and SAP's published BW/4HANA maintenance-extension announcement
+description: >-
+  Release, maintenance and deprecation posture for SAP BW. SAP BW/4HANA is
+  shipped software on a release + support-package-stack train, not a
+  continuously deployed service, so its lifecycle signals are product
+  maintenance dates and simplification lists rather than API deprecation
+  headers.
+versioning:
+  scheme: product-release + support-package-stack
+  current: '2023.09'
+  current_label: SAP BW/4HANA 2023 SPS09
+  current_source: >-
+    https://help.sap.com/http.svc/productpage?locale=en-US&product=SAP_BW4HANA
+    returned {"redirect":"/docs/SAP_BW4HANA?...&version=2023.09"} on 2026-08-29
+  known_releases: ['1.0', '2.0', '2021', '2023']
+  docs: https://help.sap.com/docs/SAP_BW4HANA
+  api_version_header: null
+  sunset_header: false
+  deprecation_header: false
+  note: >-
+    RFC 8594 Sunset / Deprecation headers are not used - there is no
+    vendor-operated endpoint to emit them from.
+deprecation:
+  policy_url: https://help.sap.com/doc/16e3352bd6c342ec9fb1cd90adb9fbf4/2.0/en-US/SAP_BW4HANA_20_Simplification_List.pdf
+  policy_name: SAP BW/4HANA Simplification List
+  http_status: 200
+  content_type: application/pdf
+  documented: true
+  description: >-
+    SAP publishes a per-release Simplification List enumerating the objects,
+    features and interfaces that are removed, replaced or no longer supported
+    in SAP BW/4HANA relative to SAP BW 7.x - the closest thing SAP publishes
+    to a deprecation policy for this product. Available for 1.0 and 2.0.
+  other:
+    - name: SAP BW/4HANA 1.0 Simplification List
+      url: https://help.sap.com/doc/590752e646cc4b15a9092f32353b209a/1.0/en-US/SAP_BW4HANA_10_Simplification_List.pdf
+  format: pdf-only
+  format_note: >-
+    Both simplification lists are PDF. There is no machine-readable
+    deprecation feed.
+maintenance:
+  mainstream_maintenance_until: '2040'
+  statement: >-
+    SAP has announced that SAP BW/4HANA maintenance is aligned with the
+    SAP S/4HANA maintenance commitment and runs until at least 2040.
+  source: >-
+    https://community.sap.com/t5/technology-blog-posts-by-sap/sap-bw-4hana-to-extend-maintenance-in-alignment-with-sap-business-suite-and/ba-p/13457952
+  source_http_status: 403
+  source_note: >-
+    The SAP Community blog post that carries the announcement answers 403 to
+    an automated fetch (Cloudflare "Just a moment..." interstitial). The page
+    demonstrably exists and is SAP-authored; recorded as challenged, not dead.
+  authoritative_source: https://userapps.support.sap.com/sap/support/pam
+  authoritative_source_http_status: 302
+  authoritative_source_note: >-
+    The SAP Product Availability Matrix is the authoritative per-release
+    maintenance-date source. It 302s to accounts.sap.com SAML SSO - it is
+    gated behind an SAP customer S-user login, so the exact per-release end
+    dates could not be read and are not asserted here.
+  policy_url: https://support.sap.com/en/release-upgrade-maintenance.html
+  policy_http_status: 200
+sla:
+  url: null
+  uptime_target: null
+  note: >-
+    No SLA published. SAP BW/4HANA is customer-operated software; availability
+    is the customer's own. SAP BW in SAP Business Data Cloud is the hosted
+    variant and falls under SAP cloud service terms, which are not published
+    as a BW-specific SLA document.
+status_page:
+  url: https://www.sap.com/about/trust-center/cloud-service-status.html
+  http_status: 200
+  scope: sap-cloud-services
+  note: >-
+    SAP's cloud service status page. It covers SAP cloud services, which is
+    the relevant surface for SAP BW in SAP Business Data Cloud; it does NOT
+    cover a customer's own on-premises BW/4HANA system, which has no status
+    page because SAP does not operate it. Scope stated rather than implied.
+changelog: changelog/sap-bw-changelog.yml
+deprecated_operations: []
+deprecated_operations_note: >-
+  Cannot be derived - no OpenAPI in this repo, because SAP publishes none
+  for SAP BW.

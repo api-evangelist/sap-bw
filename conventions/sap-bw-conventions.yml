@@ -1,0 +1,132 @@
+generated: '2026-08-29'
+method: searched
+source: >-
+  SAP Help Portal, SAP BW/4HANA 2023 documentation set, searched via
+  help.sap.com/http.svc/elasticsearch (product=SAP_BW4HANA)
+description: >-
+  Cross-cutting request/response semantics for the SAP BW API surfaces.
+  Derived from SAP's published documentation rather than from an OpenAPI,
+  because SAP publishes no machine-readable contract for SAP BW - the OData
+  services are generated inside each customer's own system, and the BAPI/RFC
+  surface is not an HTTP API at all.
+surfaces:
+  - id: sap-bw:odata-api
+    protocol: OData (SAP Gateway / ODP)
+    style: REST
+  - id: sap-bw:bapi-api
+    protocol: RFC (SAP NetWeaver RFC, non-HTTP)
+    style: RPC
+  - id: sap-bw:ina-api
+    protocol: InA (Information Access, HTTP/JSON, proprietary)
+    style: RPC over HTTP
+authentication:
+  style: per-installation
+  mechanisms: [basic, sap-logon-ticket, saml2-bearer, oauth2, x509, snc]
+  artifact: authentication/sap-bw-authentication.yml
+versioning:
+  scheme: product-release + support-package-stack
+  current: SAP BW/4HANA 2023 SPS09
+  api_versioning: >-
+    Not versioned at the API level. The OData services BW exposes carry the
+    OData protocol version (V2 for ODP extraction, V4 where a customer
+    publishes through newer SAP Gateway registration), and the behaviour of
+    those services is pinned by the underlying BW/4HANA release and support
+    package stack, not by a URI or header version.
+  docs: https://help.sap.com/docs/SAP_BW4HANA
+pagination:
+  style: odata
+  params: ["$top", "$skip", "$skiptoken"]
+  response_fields: ["__next (OData V2 delta/next link)"]
+  note: >-
+    The ODP extraction service uses standard OData query options; SAP
+    documents delta extraction via a delta token carried on the next link
+    rather than an offset cursor, so a consumer paging an ODP extraction is
+    following server-issued links, not computing offsets.
+  docs: https://help.sap.com/docs/SAP_BW4HANA/107a6e8a38b74ede94c833ca3b7b6f51/5876a040e7d94530b71db4597f9f61a0.html
+filtering:
+  params: ["$filter", "$select", "$orderby", "$format", "$expand"]
+  note: >-
+    Standard OData system query options. BEx query variables are additionally
+    passed as service-specific parameters; SAP publishes the parameter list
+    for OData queries over BW.
+  docs: https://help.sap.com/docs/SAP_BW4HANA/107a6e8a38b74ede94c833ca3b7b6f51/c9384c774bcc4837b84bee3679520fb4.html
+error_envelope:
+  format: odata-error
+  rfc9457: false
+  note: >-
+    OData services published from SAP Gateway return the OData error payload
+    (an "error" object carrying code and message, plus SAP's innererror with
+    the ABAP message class and number). SAP publishes no RFC 9457
+    application/problem+json surface for BW. RFC-based BAPI calls return an
+    ABAP RETURN table of BAPIRET2 structures instead of an HTTP error body.
+  artifact: errors/sap-bw-problem-types.yml
+request_tracing:
+  header: null
+  note: >-
+    No published correlation-id header. Tracing in SAP BW is server-side -
+    RSPM request statistics and the SAP HANA trace - and is inspected in the
+    system, not returned to the caller.
+  docs: https://help.sap.com/docs/SAP_BW4HANA/107a6e8a38b74ede94c833ca3b7b6f51/b59f3b568cc34dfcaf320c75f152ad44.html
+rate_limit_signaling:
+  headers: []
+  note: >-
+    None. SAP publishes no rate limits for BW because there is no shared
+    vendor-operated endpoint to throttle; capacity is the customer's own
+    ABAP work-process configuration. See rate-limits/sap-bw-rate-limits.yml.
+idempotency:
+  supported: false
+  header: null
+  note: >-
+    SAP documents no idempotency key for any SAP BW surface. Data loads are
+    made repeatable by BW's request model instead - a DTP run creates a
+    numbered request, and re-running a load produces a new request rather
+    than replaying an old one - but that is request bookkeeping, not an
+    idempotency contract a caller can set. No Idempotency pointer is emitted.
+dry_run_mode:
+  supported: partial
+  note: >-
+    SAP documents simulation for data transfer processes (DTP simulation mode
+    in the BW Modeling Tools / DTP monitor), which executes the
+    transformation without updating the target. This is a UI/administration
+    capability, not an API flag a caller can pass, so it is recorded as
+    partial rather than as an agent-usable dry run.
+reversibility:
+  grade: documented
+  applies_to: [sap-bw:bapi-api]
+  read_only_surfaces: [sap-bw:odata-api, sap-bw:ina-api]
+  note: >-
+    The OData and InA surfaces are read/extraction surfaces - reversibility is
+    na for them. The write surface is data loading and administration, driven
+    over RFC/BAPI and process chains, and there SAP does document a reversal
+    path: a load creates a numbered request and that request can be deleted
+    from the target, which removes exactly the rows it wrote.
+  operations:
+    - action: Data transfer process (DTP) load into a DataStore object
+      reversal: Delete the request from the DataStore object
+      operationId: null
+      window: null
+      docs: https://help.sap.com/docs/SAP_BW4HANA/b3701cd3826440618ef938d74dc93c51/4e2aec89ab4e49e7862d5459b5734c40.html
+      note: >-
+        SAP BW/4HANA 2023 added deletion of individual requests from cube-like
+        aDSOs that expose data via ODP without requiring a reload. SAP states
+        the capability; it states no time window inside which deletion must
+        happen, so this grades documented and not verified. The window is
+        instead bounded by operational state the docs do not quantify -
+        whether the request has been compressed, archived, or already consumed
+        by a downstream delta - so no window is asserted here.
+    - action: Data archiving process
+      reversal: Reload archived data
+      operationId: null
+      window: null
+      docs: https://help.sap.com/docs/SAP_BW4HANA/107a6e8a38b74ede94c833ca3b7b6f51/4e30d14821bc1557e10000000a42189e.html
+      note: Archived data can be reloaded. No stated window.
+  grade_reason: >-
+    A reversal path exists and is documented for the write surface, but SAP
+    states no window for any of them. Per the rubric that is `documented`
+    (0.4), not `verified` (1.0). No window is invented here.
+cross_links:
+  errors: errors/sap-bw-problem-types.yml
+  lifecycle: lifecycle/sap-bw-lifecycle.yml
+  authentication: authentication/sap-bw-authentication.yml
+  rate_limits: rate-limits/sap-bw-rate-limits.yml
+  conformance: conformance/sap-bw-conformance.yml

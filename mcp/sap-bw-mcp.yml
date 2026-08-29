@@ -1,0 +1,35 @@
+generated: '2026-08-29'
+method: searched
+status: none
+source: >-
+  github.com/SAP (org repo search), help.sap.com search API, npm registry,
+  and a web search for an SAP-published MCP server covering SAP BW
+description: >-
+  SAP publishes no Model Context Protocol server for SAP BW. SAP's own MCP
+  work as of this probe covers developer tooling (CAP, Fiori) and other
+  products; nothing in SAP's org, docs or registries exposes SAP BW or
+  SAP BW/4HANA as MCP tools. No candidate tool list could be derived either,
+  because this repo holds no OpenAPI to derive one from - SAP BW's API
+  surfaces are customer-generated OData services, RFC/BAPI function modules
+  and the proprietary InA protocol, none of which ship a machine-readable
+  contract.
+deployment:
+  mode: none
+  auth: unknown
+  verified: searched
+third_party:
+  - name: bw-modeling-mcp
+    repository: https://github.com/dnic-dev/bw-modeling-mcp
+    owner_type: individual
+    license: MIT
+    stars: 58
+    last_push: '2026-08-20'
+    official: false
+    note: >-
+      Community MCP server for AI-assisted SAP BW/4HANA modeling. Recorded for
+      completeness only - it is not published by SAP, it is installed and run
+      by the customer against their own BW system, and it drives BW's internal
+      modeling REST API rather than any contract SAP publishes. It does not
+      make SAP BW an agent-reachable surface and no MCPServer pointer is
+      emitted for it.
+tools: []

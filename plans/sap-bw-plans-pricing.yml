@@ -4,169 +4,50 @@ schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main
 provider: SAP BW
 providerId: sap-bw
 created: '2026-05-04'
-# Provenance stamped 2026-08-11: this artifact was written by the API Evangelist
-# bulk sweep dated 2026-05-04, not harvested from the provider. See roadmap#35.
-method: generated
-modified: '2026-05-04'
+modified: '2026-08-29'
+generated: '2026-08-29'
+method: searched
+source: https://www.sap.com/products/data-cloud/business-warehouse.html
+source_http_status: 200
+description: >-
+  SAP publishes no plans, tiers, quotas or list prices for SAP BW. The product
+  page is a contact-sales surface: the only conversion path on
+  sap.com/products/data-cloud/business-warehouse.html is a "Connect with SAP"
+  registration/contact form. There is no /pricing page - probed
+  sap.com/products/technology-platform/bw4hana/pricing.html (404) and
+  sap.com/products/technology-platform/bw4hana.html (404, the product now
+  lives under /products/data-cloud/business-warehouse.html). SAP BW/4HANA is
+  licensed under an enterprise agreement, and SAP BW in SAP Business Data
+  Cloud is sold on SAP's capacity-unit commercial model; neither is published
+  as a self-serve plan.
 tags:
   - Business Intelligence
   - Data Warehousing
   - Enterprise
   - ETL
   - SAP
-description: Machine-readable plans and pricing scaffold for this API provider. Conforms to the API Commons
-  Plans schema. Tier limits and prices are scaffold defaults; replace with provider-published values.
-plans:
-  - id: sap-bw-free
-    name: Free
-    type: freemium
-    description: Free entry tier for the SAP BW API surface. Intended for evaluation, prototyping, and
-      low-volume integrations. Real limits and pricing must be reconciled with the provider's published
-      plan documentation.
-    entries:
-      - label: API Requests
-        description: Monthly API request quota across all included endpoints
-        name: api_requests
-        type: quota
-        metric: requests
-        limit: 1000
-        timeFrame: month
-        geo: global
-        domains:
-          - https://sap-host/sap/opu/odata/sap/
-          - https://sap-host/sap/bc/
-          - https://help.sap.com/docs/SAP_BUSINESSOBJECTS_ANALYSIS_OFFICE
-        unit: 1
-        price: '0.00'
-        userMultiplied: false
-      - label: Rate Limit
-        description: Maximum requests per minute on the free tier
-        name: rate_limit
-        type: rate
-        metric: requests_per_minute
-        limit: 10
-        timeFrame: minute
-        geo: global
-        domains:
-          - https://sap-host/sap/opu/odata/sap/
-          - https://sap-host/sap/bc/
-          - https://help.sap.com/docs/SAP_BUSINESSOBJECTS_ANALYSIS_OFFICE
-        unit: 1
-        price: '0.00'
-        userMultiplied: false
-    elements:
-      - name: Public Documentation
-      - name: Community Support
-      - name: Sandbox Access
-      - name: SAP BW OData API
-      - name: SAP BW BAPI/RFC API
-      - name: SAP Analysis for Office API
-  - id: sap-bw-pro
-    name: Professional
-    type: paid
-    description: Production tier for SAP BW. Provides higher quotas, priority support, and access to the
-      broader API portfolio. Pricing placeholder; align with the provider's pricing page.
-    entries:
-      - label: API Requests
-        description: Monthly API request quota
-        name: api_requests
-        type: quota
-        metric: requests
-        limit: 100000
-        timeFrame: month
-        geo: global
-        domains:
-          - https://sap-host/sap/opu/odata/sap/
-          - https://sap-host/sap/bc/
-          - https://help.sap.com/docs/SAP_BUSINESSOBJECTS_ANALYSIS_OFFICE
-        unit: 1
-        price: TBD
-        userMultiplied: false
-      - label: Rate Limit
-        description: Maximum requests per minute on the professional tier
-        name: rate_limit
-        type: rate
-        metric: requests_per_minute
-        limit: 100
-        timeFrame: minute
-        geo: global
-        domains:
-          - https://sap-host/sap/opu/odata/sap/
-          - https://sap-host/sap/bc/
-          - https://help.sap.com/docs/SAP_BUSINESSOBJECTS_ANALYSIS_OFFICE
-        unit: 1
-        price: '0.00'
-        userMultiplied: false
-      - label: Overage
-        description: Per-request price after monthly quota is exceeded
-        name: overage
-        type: metered
-        metric: requests
-        limit: -1
-        timeFrame: month
-        geo: global
-        domains:
-          - https://sap-host/sap/opu/odata/sap/
-          - https://sap-host/sap/bc/
-          - https://help.sap.com/docs/SAP_BUSINESSOBJECTS_ANALYSIS_OFFICE
-        unit: 1000
-        price: TBD
-        userMultiplied: false
-    elements:
-      - name: All Production Endpoints
-      - name: Email Support
-      - name: SLA Targets
-      - name: Webhook Subscriptions
-      - name: SAP BW OData API
-      - name: SAP BW BAPI/RFC API
-      - name: SAP Analysis for Office API
-  - id: sap-bw-enterprise
-    name: Enterprise
-    type: enterprise
-    description: Custom-negotiated tier for SAP BW. Includes dedicated capacity, contractual SLAs, security
-      review, data residency options, and named technical account management.
-    entries:
-      - label: API Requests
-        description: Negotiated request volume; -1 indicates uncapped subject to fair use
-        name: api_requests
-        type: quota
-        metric: requests
-        limit: -1
-        timeFrame: month
-        geo: configurable
-        domains:
-          - https://sap-host/sap/opu/odata/sap/
-          - https://sap-host/sap/bc/
-          - https://help.sap.com/docs/SAP_BUSINESSOBJECTS_ANALYSIS_OFFICE
-        unit: 1
-        price: custom
-        userMultiplied: false
-      - label: Rate Limit
-        description: Negotiated burst and steady-state rate
-        name: rate_limit
-        type: rate
-        metric: requests_per_minute
-        limit: 1000
-        timeFrame: minute
-        geo: configurable
-        domains:
-          - https://sap-host/sap/opu/odata/sap/
-          - https://sap-host/sap/bc/
-          - https://help.sap.com/docs/SAP_BUSINESSOBJECTS_ANALYSIS_OFFICE
-        unit: 1
-        price: custom
-        userMultiplied: false
-    elements:
-      - name: Unlimited / Negotiated Volume
-      - name: 24/7 Dedicated Support
-      - name: Contractual SLA
-      - name: Security & Compliance Review
-      - name: Dedicated Account Manager
-      - name: Custom Data Residency
-      - name: SAP BW OData API
-      - name: SAP BW BAPI/RFC API
-      - name: SAP Analysis for Office API
-maintainers:
-  - FN: Kin Lane
-    email: kin@apievangelist.com
-    url: https://apievangelist.com
+plan_count: 0
+plans: []
+pricing_model: contact-sales
+self_serve: false
+free_tier: false
+trial: false
+pricing_url: null
+contact_url: https://www.sap.com/registration/contact.html
+evidence:
+  - url: https://www.sap.com/products/data-cloud/business-warehouse.html
+    status: 200
+    finding: >-
+      Product page. Calls to action are "Take the product tour",
+      "Register now" (webinar) and "Connect with SAP" (contact form).
+      No price, no tier, no quota anywhere on the page.
+  - url: https://www.sap.com/products/technology-platform/bw4hana/pricing.html
+    status: 404
+  - url: https://www.sap.com/products/technology-platform/bw4hana.html
+    status: 404
+    finding: The old BW/4HANA product URL is now a real 404.
+note: >-
+  This file previously carried a bulk-sweep scaffold inventing a Free tier of
+  1,000 requests per month against the placeholder host https://sap-host/.
+  That was fabrication and has been replaced with the searched finding. An
+  honest plan_count of 0 is the measurement.

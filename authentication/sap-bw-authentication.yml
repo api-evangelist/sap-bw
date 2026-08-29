@@ -1,0 +1,113 @@
+generated: '2026-08-29'
+method: searched
+source: >-
+  https://help.sap.com/docs/SAP_BW4HANA/d3b558c9e49d4eb495c99c63a0ae549a/4f0ab13ed47c5f87e10000000a42189b.html
+docs:
+  - name: Authentication and Single Sign-On
+    url: https://help.sap.com/docs/SAP_BW4HANA/d3b558c9e49d4eb495c99c63a0ae549a/4f0ab13ed47c5f87e10000000a42189b.html
+  - name: User Administration and Authentication
+    url: https://help.sap.com/docs/SAP_BW4HANA/d3b558c9e49d4eb495c99c63a0ae549a/4f0a05dde2a4606ee10000000a42189e.html
+  - name: Communication Channel Security
+    url: https://help.sap.com/docs/SAP_BW4HANA/d3b558c9e49d4eb495c99c63a0ae549a/4f0a063fe2a4606ee10000000a42189e.html
+  - name: Establishing Secure Network Communication (SNC)
+    url: https://help.sap.com/docs/SAP_BW4HANA/841c96bc79644fcfb9fa7103aad9c15b/fdc0a4683c5b43d1aa5c26497b3927e8.html
+  - name: Web Services and ICF Services
+    url: https://help.sap.com/docs/SAP_BW4HANA/d3b558c9e49d4eb495c99c63a0ae549a/b31dd13ffc9a4a21e10000000a1550b0.html
+description: >-
+  SAP BW/4HANA has no vendor-hosted API gateway and therefore no vendor-issued
+  credential. Authentication is whatever the customer's own SAP NetWeaver
+  Application Server for ABAP is configured for, and every mechanism below is
+  an AS ABAP / Internet Communication Framework capability that SAP documents
+  for BW, not an SAP BW-specific auth scheme. Derived from SAP's published
+  security documentation, not from an OpenAPI securitySchemes block - this
+  repo holds no spec, because SAP publishes none for BW.
+summary:
+  types: [http, apiKey, oauth2, mutualTLS]
+  vendor_issued_credentials: false
+  per_customer_configured: true
+  api_key_in: [header, cookie]
+  oauth2_flows: [authorizationCode, clientCredentials, saml2Bearer]
+schemes:
+  - name: basic
+    type: http
+    scheme: basic
+    surface: [sap-bw:odata-api, sap-bw:ina-api]
+    description: >-
+      SAP user name and password over HTTPS against the ABAP Internet
+      Communication Framework node that serves the OData or InA service.
+      Documented and widely used for BW OData/ODP extraction, but SAP's own
+      security guidance treats it as the fallback, not the target state.
+    source: help.sap.com Authentication and Single Sign-On
+  - name: sap-logon-ticket
+    type: apiKey
+    in: cookie
+    parameter_name: MYSAPSSO2
+    surface: [sap-bw:odata-api, sap-bw:ina-api]
+    description: >-
+      SAP logon ticket issued by an SAP ticket-issuing system and presented as
+      a cookie. The classic SAP single sign-on mechanism for HTTP access to
+      AS ABAP.
+    source: help.sap.com Authentication and Single Sign-On
+  - name: saml2-bearer
+    type: oauth2
+    flow: saml2Bearer
+    surface: [sap-bw:odata-api, sap-bw:ina-api]
+    description: >-
+      SAML 2.0 assertion, used both for browser SSO into BW web surfaces and
+      as a bearer assertion exchanged for an OAuth 2.0 token at the AS ABAP
+      OAuth 2.0 authorization server. This is the mechanism behind SAP
+      Analytics Cloud live connections to SAP BW.
+    source: help.sap.com Authentication and Single Sign-On
+  - name: oauth2
+    type: oauth2
+    flows: [authorizationCode, clientCredentials, saml2Bearer]
+    surface: [sap-bw:odata-api]
+    description: >-
+      AS ABAP ships an OAuth 2.0 authorization server (transaction SOAUTH2)
+      that protects OData services published through SAP Gateway, including
+      the BW ODP extraction service. Endpoints, clients and scopes are
+      created per customer system - there is no SAP-hosted authorization
+      server and therefore no discoverable
+      /.well-known/oauth-authorization-server. Probed anyway on every SAP host
+      in this profile; see well-known/sap-bw-well-known.yml, all misses.
+    scopes_documented: false
+    authorization_url: null
+    token_url: null
+    note: >-
+      Both URLs are null because they are per-installation
+      (https://{sap-bw-host}:{port}/sap/bc/sec/oauth2/authorize and
+      /sap/bc/sec/oauth2/token on the customer's own system). Recording a
+      concrete URL here would assert a host SAP does not operate.
+  - name: x509-client-certificate
+    type: mutualTLS
+    surface: [sap-bw:odata-api, sap-bw:ina-api]
+    description: >-
+      X.509 client certificates over HTTPS, mapped to SAP users in the ABAP
+      system. SAP's documented option for system-to-system HTTP access.
+    source: help.sap.com Authentication and Single Sign-On
+  - name: snc
+    type: http
+    scheme: proprietary
+    surface: [sap-bw:bapi-api]
+    description: >-
+      Secure Network Communications - SAP's own transport-security and
+      authentication layer for the RFC/DIAG protocols. This is what protects
+      the BAPI/RFC surface reached through SAP JCo, PyRFC and node-rfc;
+      RFC is not an HTTP protocol and none of the HTTP schemes above apply
+      to it.
+    source: help.sap.com Establishing Secure Network Communication
+authorization:
+  model: SAP analysis authorizations + ABAP authorization objects
+  description: >-
+    Data-level access in SAP BW is governed by analysis authorizations
+    (transaction RSECADMIN) layered on top of standard ABAP authorization
+    objects - not by API scopes. An OAuth scope, where OAuth is used at all,
+    grants access to an OData service; what rows come back is decided by the
+    calling user's analysis authorizations.
+  docs: https://help.sap.com/docs/SAP_BW4HANA/107a6e8a38b74ede94c833ca3b7b6f51/4cbb3bdbf7ec4195909005e875e6bb51.html
+scopes_artifact: null
+scopes_note: >-
+  scopes/ is deliberately absent. OAuth scopes in AS ABAP are created per
+  customer system against locally published OData services; SAP publishes no
+  scope reference for SAP BW, and deriving one would mean inventing scope
+  names for services that do not exist until a customer generates them.

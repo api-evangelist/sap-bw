@@ -1,0 +1,130 @@
+generated: '2026-08-29'
+method: searched
+source: >-
+  SAP Help Portal SAP BW/4HANA documentation (help.sap.com search API) and
+  https://www.sap.com/about/trust-center/certification-compliance.html
+description: >-
+  Standards conformance for SAP BW. Asserted from SAP's published
+  documentation, not from a spec - this repo holds no OpenAPI, because SAP
+  publishes none for BW.
+standards:
+  - id: odata
+    conforms: true
+    version: "OData 2.0 (ODP extraction service); OData 4.0 where a customer registers the service through newer SAP Gateway"
+    evidence: >-
+      SAP documents "Using the OData Service for Extracting ODP Data" -
+      an OData client consumes the service via URLs and standard OData
+      system query options ($top, $skip, $filter, $select, $orderby, $format).
+    source: https://help.sap.com/docs/SAP_BW4HANA/107a6e8a38b74ede94c833ca3b7b6f51/50f4ee6253134d3cafa25b9444f0c5a9.html
+  - id: oauth2
+    conforms: true
+    evidence: >-
+      AS ABAP ships an OAuth 2.0 authorization server (SOAUTH2) that protects
+      OData services published through SAP Gateway. Configured per customer
+      system; no SAP-hosted authorization server exists.
+    source: https://help.sap.com/docs/SAP_BW4HANA/d3b558c9e49d4eb495c99c63a0ae549a/4f0ab13ed47c5f87e10000000a42189b.html
+  - id: saml2
+    conforms: true
+    evidence: >-
+      SAML 2.0 browser SSO and SAML bearer assertion flow documented for
+      SAP BW HTTP surfaces; it is the mechanism behind SAP Analytics Cloud
+      live connections to SAP BW.
+    source: https://help.sap.com/docs/SAP_BW4HANA/d3b558c9e49d4eb495c99c63a0ae549a/4f0ab13ed47c5f87e10000000a42189b.html
+  - id: x509-mutual-tls
+    conforms: true
+    evidence: X.509 client certificates documented for HTTP access to AS ABAP.
+    source: https://help.sap.com/docs/SAP_BW4HANA/d3b558c9e49d4eb495c99c63a0ae549a/4f0ab13ed47c5f87e10000000a42189b.html
+  - id: soap
+    conforms: true
+    evidence: >-
+      SAP documents ODP source systems of type SOAP/HTTP and the Web Services
+      / ICF services that back them. The WSDL is generated inside the
+      customer's own ABAP system (SOAMANAGER / ?wsdl on an ICF node), so
+      there is no published contract to harvest - see wsdl_note below.
+    source: https://help.sap.com/docs/SAP_BW4HANA/c785be6ce177492a825d45527a2a389d/bdedce5247a74b658d3eb7ca1e6cb46a.html
+  - id: rfc9457-problem-details
+    conforms: false
+    evidence: >-
+      OData error payload and BAPIRET2 return structures are used; no
+      application/problem+json surface is documented.
+  - id: openid-connect
+    conforms: false
+    evidence: >-
+      Probed /.well-known/openid-configuration on every SAP host in this
+      profile; all misses. See well-known/sap-bw-well-known.yml.
+  - id: rfc9116-security-txt
+    conforms: true
+    evidence: >-
+      https://www.sap.com/.well-known/security.txt returns 200 text/plain
+      with Contact and Expires (2028-01-31). Saved verbatim to
+      well-known/sap-bw-security.txt.
+  - id: json-api
+    conforms: false
+  - id: graphql
+    conforms: false
+  - id: asyncapi
+    conforms: false
+    evidence: >-
+      No event or streaming contract published. BW's "Process Chains for
+      Streaming" documentation covers inbound streaming ingestion into BW,
+      not an outbound event surface a consumer subscribes to.
+  - id: idempotency
+    conforms: false
+    evidence: No idempotency key documented on any SAP BW surface.
+domain_standard:
+  id: odata
+  name: OData (OASIS Open Data Protocol)
+  conforms: true
+  is_domain_standard_for: >-
+    Enterprise data warehousing and analytics extraction - OData is the
+    interchange standard a BI/ETL tool is expected to already speak, and
+    it is what lets Progress DataDirect, IBM DataStage and comparable tools
+    connect to SAP BW without a bespoke connector.
+  evidence_location: >-
+    SAP's own documentation, "Generate the Service for Extracting ODP Data
+    via OData" and "Using the OData Service for Extracting ODP Data",
+    which describe generating a standards-conformant OData service over a
+    BW ODP provider and consuming it with standard OData system query
+    options.
+  source: https://help.sap.com/docs/SAP_BW4HANA/107a6e8a38b74ede94c833ca3b7b6f51/49505ffb55fb46b991d4ab537318a4e5.html
+  caveat: >-
+    The conformance is real but the surface is not discoverable from outside:
+    the $metadata document that would prove it lives on the customer's own
+    host, generated per InfoProvider. There is no SAP-hosted OData endpoint
+    for BW to probe.
+compliance:
+  published: true
+  url: https://www.sap.com/about/trust-center/certification-compliance.html
+  http_status: 200
+  certifications:
+    - SOC 1
+    - SOC 2
+    - ISO/IEC 27001
+    - ISO/IEC 27017
+    - ISO/IEC 27018
+    - ISO 22301
+    - ISO 9001
+    - PCI DSS
+    - FedRAMP
+    - CSA STAR
+    - TISAX
+    - BSI C5
+    - IRAP
+    - ENS
+    - GDPR
+  note: >-
+    Company-level SAP compliance program, read from the SAP Trust Center
+    certifications page. These attestations cover SAP cloud services; SAP BW/4HANA
+    deployed on-premises inherits none of them automatically - the customer
+    operates the system and owns its certification scope. Recorded as a
+    published compliance program of the vendor, which is what the check reads,
+    with this scope caveat stated rather than left implied.
+wsdl_note: >-
+  A SOAP contract exists for BW's SOAP/HTTP ODP source systems and for
+  RFC-enabled function modules exposed through SOAMANAGER, but it is generated
+  inside each customer's ABAP system and served from that host
+  (?wsdl / ?singleWsdl on an ICF node). Probed for a published SAP-hosted WSDL
+  and found none. No wsdl/ artifact is written, because authoring one would
+  mean fabricating a contract SAP does not publish.
+grpc_note: >-
+  Searched github.com/SAP and buf.build for .proto covering SAP BW. None found.

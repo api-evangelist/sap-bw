@@ -1,0 +1,92 @@
+generated: '2026-08-29'
+method: searched
+source: live probes of the SAP hosts named in apis.yml
+description: >-
+  /.well-known/ discovery probe across every host SAP BW is reachable through.
+  SAP BW is customer-hosted (SAP BW/4HANA runs in the customer's own SAP
+  NetWeaver ABAP landscape), so there is no vendor-operated API host to probe;
+  the hosts below are SAP's own documentation, product and hub hosts. Only
+  RFC 9116 security.txt is actually served.
+hosts:
+  - host: https://www.sap.com
+    documents:
+      - path: /.well-known/security.txt
+        status: 200
+        content_type: text/plain
+        file: sap-bw-security.txt
+        note: >-
+          RFC 9116 security.txt, 86 bytes, Contact +
+          Expires 2028-01-31T18:29:00.000Z. Saved verbatim.
+      - path: /.well-known/openid-configuration
+        status: 403
+      - path: /.well-known/oauth-authorization-server
+        status: 403
+      - path: /.well-known/api-catalog
+        status: 403
+      - path: /.well-known/ai-plugin.json
+        status: 403
+      - path: /.well-known/agent-card.json
+        status: 403
+      - path: /.well-known/agent.json
+        status: 403
+  - host: https://help.sap.com
+    documents:
+      - path: /.well-known/security.txt
+        status: 200
+        content_type: text/plain
+        note: >-
+          Same RFC 9116 document as www.sap.com but with an EXPIRED
+          Expires field (2026-01-30T18:29:00.000Z, stale as of this probe).
+          The www.sap.com copy (Expires 2028-01-31) was the one saved.
+      - path: /.well-known/openid-configuration
+        status: 302
+      - path: /.well-known/oauth-authorization-server
+        status: 302
+      - path: /.well-known/api-catalog
+        status: 302
+      - path: /.well-known/ai-plugin.json
+        status: 302
+      - path: /.well-known/agent-card.json
+        status: 302
+        note: >-
+          302 then 200 text/html - the SAP Help Portal single-page-app shell,
+          not a document. Treated as a miss.
+  - host: https://api.sap.com
+    documents:
+      - path: /.well-known/security.txt
+        status: 200
+        content_type: text/html
+        note: >-
+          NOT a document. SAP Business Accelerator Hub answers 200 with an
+          HTML shell for every /.well-known/* path (this one returned a
+          119KB marketing page). Catch-all, recorded as a miss.
+      - path: /.well-known/api-catalog
+        status: 200
+        content_type: text/html
+        note: HTML shell, same catch-all. Miss.
+      - path: /.well-known/openid-configuration
+        status: 200
+        content_type: text/html
+        note: HTML shell, same catch-all. Miss.
+      - path: /.well-known/oauth-authorization-server
+        status: 200
+        content_type: text/html
+        note: HTML shell, same catch-all. Miss.
+      - path: /.well-known/agent-card.json
+        status: 200
+        content_type: text/html
+        note: HTML shell (793 bytes, SAP login bootstrap). Miss.
+      - path: /.well-known/agent.json
+        status: 200
+        content_type: text/html
+        note: HTML shell (793 bytes, SAP login bootstrap). Miss.
+soft_404_control:
+  - host: https://help.sap.com
+    path: /.well-known/api-evangelist-control-probe-xyz
+    status: 302
+    note: >-
+      Control probe for a path that cannot exist. help.sap.com 302s it the
+      same way it 302s the real /.well-known/* paths, confirming those are
+      not served documents.
+hit_count: 1
+agent_card_found: false

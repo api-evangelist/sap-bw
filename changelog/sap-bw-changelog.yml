@@ -1,0 +1,69 @@
+generated: '2026-08-29'
+method: searched
+source: >-
+  https://help.sap.com/docs/SAP_BW4HANA (What's New section) and
+  https://help.sap.com/doc/79b7f876ccab47d3b59cd5f5742a65ab/2023.09/en-US/Whats_new_in_SAP_BW4HANA_10_en.pdf
+description: >-
+  SAP publishes release information for SAP BW/4HANA as a per-support-package
+  "What's New" set on the SAP Help Portal plus a consolidated release
+  information PDF. It is a product release log, not an API changelog - no
+  entry is scoped to an API contract, because SAP publishes no API contract
+  for BW.
+scheme: product-release + support-package-stack
+current_version: '2023.09'
+current_label: SAP BW/4HANA 2023 SPS09
+docs: https://help.sap.com/docs/SAP_BW4HANA
+release_information_pdf:
+  url: https://help.sap.com/doc/79b7f876ccab47d3b59cd5f5742a65ab/2023.09/en-US/Whats_new_in_SAP_BW4HANA_10_en.pdf
+  http_status: 200
+  content_type: application/pdf
+  size_bytes: 454187
+  title: What's New in SAP BW/4HANA 2023 (Release Information)
+entries:
+  - version: 2023 SPS09
+    date: null
+    type: additions
+    url: https://help.sap.com/docs/SAP_BW4HANA/b3701cd3826440618ef938d74dc93c51/57ff61e43645457faf933c0591eccacd.html
+    highlights:
+      - >-
+        SAP BW/4HANA 2023 Support Package Stack 9 contains new, changed and
+        enhanced functions, including BW Modeling Tools (BWMT) functions.
+    note: >-
+      SAP does not publish a release date on the What's New page; date left
+      null rather than guessed.
+  - version: 2023 SPS08
+    date: '2026-03-30'
+    type: additions
+    url: https://help.sap.com/doc/240500112ed24dd0b087dfde6b53607e/2023.08/en-US/SAP_BW4HANA_Master_Guide_en.pdf
+    highlights:
+      - Data Transfer Process error handling now available during execution in SAP HANA.
+    note: Date is the Master Guide document version date for the 2023.08 deliverable.
+  - version: '2023'
+    date: null
+    type: additions
+    url: https://help.sap.com/docs/SAP_BW4HANA/b3701cd3826440618ef938d74dc93c51/4e2aec89ab4e49e7862d5459b5734c40.html
+    highlights:
+      - >-
+        Delete Requests from DataStore objects (advanced) that expose data via
+        ODP, without requiring a reload - the reversal path recorded in
+        conventions/sap-bw-conventions.yml.
+      - Near-line storage changes.
+      - Changes to management of SAP HANA view generation.
+breaking_changes_channel:
+  name: SAP BW/4HANA Simplification List
+  url: https://help.sap.com/doc/16e3352bd6c342ec9fb1cd90adb9fbf4/2.0/en-US/SAP_BW4HANA_20_Simplification_List.pdf
+  note: >-
+    Removals and replacements are published separately from the What's New
+    feed, in the per-release Simplification List (PDF).
+gaps:
+  - >-
+    Dates are missing from most What's New pages; the help portal exposes a
+    document date rather than a release date, and those dates cluster on
+    documentation-rebuild days (2026-07-13, 2026-08-24) rather than on
+    shipping events.
+  - >-
+    There is no RSS/Atom/JSON changelog feed. Everything here was assembled
+    from the help portal's search service and PDFs.
+  - >-
+    SAP Notes, which carry the actual per-fix detail, sit behind the SAP
+    Support Portal S-user login.

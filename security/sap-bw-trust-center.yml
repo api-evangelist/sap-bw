@@ -1,0 +1,68 @@
+generated: '2026-08-29'
+method: searched
+probe: true
+url: https://www.sap.com/about/trust-center.html
+http_status: 200
+description: >-
+  SAP operates a company-level Trust Center with a searchable compliance
+  document library. The automated probe in probe-security-programs.py
+  returned no hit because www.sap.com answers 403 to its user agent; a
+  re-fetch with full browser headers returned 200 on both the trust center
+  and the certifications page, so this was recorded by hand from that fetch.
+pages:
+  - name: SAP Trust Center
+    url: https://www.sap.com/about/trust-center.html
+    status: 200
+  - name: Certifications and Compliance
+    url: https://www.sap.com/about/trust-center/certification-compliance.html
+    status: 200
+  - name: Report a Security Issue (Security Incident Management)
+    url: https://www.sap.com/report-a-vulnerability
+    status: 200
+    resolves_to: https://www.sap.com/about/trust-center/security/incident-management.html
+  - name: SAP Cloud Service Status
+    url: https://www.sap.com/about/trust-center/cloud-service-status.html
+    status: 200
+certifications:
+  - SOC 1
+  - SOC 2
+  - ISO/IEC 27001
+  - ISO/IEC 27017
+  - ISO/IEC 27018
+  - ISO 22301
+  - ISO 9001
+  - PCI DSS
+  - FedRAMP
+  - CSA STAR
+  - TISAX
+  - BSI C5
+  - IRAP
+  - ENS
+  - GDPR
+evidence:
+  - source: https://www.sap.com/about/trust-center/certification-compliance.html
+    http_status: 200
+    bytes: 258067
+    keywords:
+      - SOC 1
+      - SOC 2
+      - ISO/IEC 27001
+      - ISO/IEC 27017
+      - ISO/IEC 27018
+      - ISO 22301
+      - PCI DSS
+      - FedRAMP
+      - CSA STAR
+      - TISAX
+      - C5
+      - IRAP
+      - ENS
+    excerpt: >-
+      "Compliance offerings from SAP - Explore our certificates, reports, and
+      attestations." SAP also publishes a SOC & C5 performance calendar
+      committing SOC 1 reports within 90 days of each performance period.
+scope_caveat: >-
+  These are SAP corporate/cloud attestations. SAP BW/4HANA deployed
+  on-premises inherits none of them - the customer runs the system and owns
+  its own certification scope. SAP BW in SAP Business Data Cloud, being an
+  SAP-operated cloud service, does fall inside SAP's cloud compliance scope.

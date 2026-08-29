@@ -1,0 +1,131 @@
+generated: '2026-08-29'
+method: searched
+source: >-
+  registry.npmjs.org, pypi.org/pypi/*/json, search.maven.org/solrsearch,
+  azuresearch-usnc.nuget.org, and github.com/SAP
+description: >-
+  SAP publishes no client library dedicated to SAP BW. What it does publish,
+  first-party, are the connectors an integration actually uses to reach a
+  BW/4HANA system: the NetWeaver RFC bindings that drive the BAPI/RFC surface,
+  and the SAP HANA drivers that reach the BW/4HANA database layer. Every entry
+  below was read from the registry metadata endpoint on the generated date.
+  No SAP-published, BW-specific SDK exists in any registry probed.
+packages:
+  - language: python
+    registry: pypi
+    name: pyrfc
+    url: https://pypi.org/project/pyrfc/
+    install: pip install pyrfc
+    official: true
+    version: 3.3.1
+    published: '2024-01-09'
+    repository: https://github.com/SAP/PyRFC
+    author: SAP SE
+    surface: sap-bw:bapi-api
+    note: >-
+      Python bindings for the SAP NetWeaver RFC SDK. This is the first-party
+      path for calling SAP BW BAPIs and RFC-enabled function modules
+      (RSPC_API_CHAIN_START, RSDRI_*, BAPI_*). Latest release 3.3.1 is from
+      January 2024 - more than two years stale against a product whose current
+      documentation set is BW/4HANA 2023 SPS09. Requires the SAP NW RFC SDK,
+      which is itself only downloadable from the SAP Support Portal behind a
+      customer login.
+  - language: javascript
+    registry: npm
+    name: node-rfc
+    url: https://www.npmjs.com/package/node-rfc
+    install: npm install node-rfc
+    official: true
+    version: 3.3.1
+    published: '2023-11-29'
+    repository: https://github.com/SAP/node-rfc
+    license: Apache-2.0
+    author: SAP SE
+    surface: sap-bw:bapi-api
+    note: >-
+      Node.js bindings for the SAP NetWeaver RFC SDK, the JavaScript sibling of
+      PyRFC. Latest release 3.3.1 is from November 2023. Same SAP NW RFC SDK
+      prerequisite, same customer-login download gate.
+  - language: python
+    registry: pypi
+    name: hdbcli
+    url: https://pypi.org/project/hdbcli/
+    install: pip install hdbcli
+    official: true
+    version: 2.29.27
+    published: '2026-08-27'
+    author: SAP SE
+    surface: sap-bw:odata-api
+    note: >-
+      SAP HANA Python client. Not a BW API client - it reaches the SAP HANA
+      database that BW/4HANA runs on, which is how External SAP HANA SQL Views
+      generated over BW InfoProviders are consumed. Actively released
+      (two days before this probe).
+  - language: javascript
+    registry: npm
+    name: "@sap/hana-client"
+    url: https://www.npmjs.com/package/@sap/hana-client
+    install: npm install @sap/hana-client
+    official: true
+    version: 2.29.27
+    published: '2026-08-27'
+    author: SAP SE
+    surface: sap-bw:odata-api
+    note: >-
+      Official SAP HANA Node.js driver. Same scope caveat as hdbcli - HANA
+      layer, not the BW API layer.
+  - language: java
+    registry: maven
+    name: com.sap.cloud.db.jdbc:ngdbc
+    url: https://central.sonatype.com/artifact/com.sap.cloud.db.jdbc/ngdbc
+    install: "<dependency><groupId>com.sap.cloud.db.jdbc</groupId><artifactId>ngdbc</artifactId></dependency>"
+    official: true
+    version: 2.25.9
+    published: '2025-06-17'
+    author: SAP SE
+    surface: sap-bw:odata-api
+    note: >-
+      SAP HANA JDBC driver, first-party and on Maven Central. Same HANA-layer
+      scope caveat.
+  - language: java
+    registry: none
+    name: SAP Java Connector (SAP JCo 3)
+    url: https://support.sap.com/en/product/connectors/jco.html
+    official: true
+    version: null
+    published: null
+    surface: sap-bw:bapi-api
+    note: >-
+      SAP's own Java connector for BAPI/RFC calls into SAP BW. It is NOT
+      published to Maven Central - version and release date could not be read
+      because the only distribution channel is the SAP Support Portal behind a
+      customer S-user login. The Maven Central hits for "sapjco" are all
+      third-party wrappers (org.hibersap, com.github.virtualcry,
+      org.talend.esb.sap), none published by SAP. Recorded as null rather than
+      guessed.
+  - language: dotnet
+    registry: nuget
+    name: SAP .NET Connector (NCo)
+    url: https://support.sap.com/en/product/connectors/msnet.html
+    official: true
+    version: null
+    published: null
+    surface: sap-bw:bapi-api
+    note: >-
+      Queried api.nuget.org for SAP-published connector packages; zero hits.
+      Like SAP JCo, NCo ships only from the SAP Support Portal behind a
+      customer login, so there is no registry metadata endpoint to date it.
+official_count: 7
+registry_dated_count: 5
+findings:
+  - >-
+    There is no SAP-published SDK for SAP BW itself in any public registry.
+    The BW API surface is reached through generic SAP connectors.
+  - >-
+    The two connectors that actually drive the BW BAPI/RFC surface - PyRFC and
+    node-rfc - both last shipped in 2023/2024 and are the stalest first-party
+    artifacts in this profile.
+  - >-
+    The two SAP connectors most enterprises actually use for BW (JCo and NCo)
+    have no public registry presence at all: they are login-gated downloads,
+    so a consumer cannot resolve, pin, or audit them from a package manifest.
