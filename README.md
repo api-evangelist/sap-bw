@@ -1,4 +1,4 @@
-# SAP BW (sap-bw)
+# SAP BW
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -64,61 +64,118 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-SAP Business Warehouse (SAP BW) and SAP BW/4HANA provide enterprise data warehousing capabilities with APIs for data extraction, query execution, metadata management, and integration with SAP and non-SAP systems.
+SAP Business Warehouse (SAP BW) and SAP BW/4HANA provide enterprise data warehousing capabilities with APIs for data extraction, query execution, metadata management, and integration with SAP and non-SAP systems. The platform offers OData services, BAPI/RFC interfaces, and Analysis Office APIs for programmatic access to data warehouse operations.
 
-**URL:** [https://raw.githubusercontent.com/api-evangelist/sap-bw/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/sap-bw/refs/heads/main/apis.yml)
+**Areas:** Business Intelligence · Data Warehousing · Enterprise · ETL · SAP
 
-**Run:** [Capabilities Using Naftiko](https://github.com/naftiko/fleet?utm_source=api-evangelist&utm_medium=readme&utm_campaign=company-api-evangelist&utm_content=repo)
+## SAP BW on APIs.io
 
-## Tags:
+Everything profiled for SAP BW is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/sap-bw/](https://apis.io/providers/sap-bw/)** — or go straight to one of the APIs or properties below.
 
- - Business Intelligence, Data Warehousing, Enterprise, ETL, SAP
+### APIs (4)
 
-## Timestamps
+- [SAP BW OData API](https://apis.io/apis/sap-bw/odata-api/) — OData-based REST API for querying SAP BW data, executing BEx queries, and accessing InfoProviders. Supports analytical queries with filtering, aggregation,…
+- [SAP BW BAPI/RFC API](https://apis.io/apis/sap-bw/bapi-api/) — Business Application Programming Interfaces (BAPIs) and Remote Function Call (RFC) interfaces for SAP BW providing access to metadata management, data…
+- [SAP Analysis for Office API](https://apis.io/apis/sap-bw/analysis-office-api/) — API for SAP Analysis for Microsoft Office providing programmatic control of analytical workbooks, data source connections, and report automation within…
+- [SAP BW InA API](https://apis.io/apis/sap-bw/ina-api/) — SAP Information Access (InA) is the REST/HTTP JSON protocol SAP Analytics Cloud and SAP Analysis for Microsoft Office use to query SAP BW data sources in…
 
-- **Created:** 2024-01-01
-- **Modified:** 2026-04-18
+### Published properties
 
-## APIs
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-### SAP BW OData API
-OData-based REST API for querying SAP BW data and executing BEx queries.
+#### Security (4)
 
-### SAP BW BAPI/RFC API
-Business Application Programming Interfaces for metadata and data loading.
+Authentication, trust centre, and vulnerability disclosure.
 
-### SAP Analysis for Office API
-API for analytical workbooks in Excel and PowerPoint.
+- [Sap Bw Authentication](https://apis.io/security/sap-bw/sap-bw-authentication/)
+- [Sap Bw Domain Security](https://apis.io/security/sap-bw/sap-bw-domain-security/)
+- [Sap Bw Trust Center](https://apis.io/security/sap-bw/sap-bw-trust-center/)
+- [Sap Bw Vulnerability Disclosure](https://apis.io/security/sap-bw/sap-bw-vulnerability-disclosure/)
 
-## Features
+#### Plans and pricing (1)
 
-| Name | Description |
-|------|-------------|
-| Enterprise Data Warehousing | Centralized data warehousing across SAP and non-SAP sources. |
-| BEx Query Execution | Execute Business Explorer queries programmatically. |
-| OData Query Access | Access SAP BW data through standard OData REST services. |
-| Process Chain Management | Automate ETL process chains for scheduled data loading. |
-| Metadata Services | Programmatic access to InfoProvider metadata and hierarchies. |
+Published plans, tiers and prices.
 
-## Use Cases
+- [Sap Bw Plans Pricing](https://apis.io/plans/sap-bw/sap-bw-plans-pricing/)
 
-| Name | Description |
-|------|-------------|
-| Enterprise Reporting | Build enterprise reports connecting to SAP BW data. |
-| Data Integration | Extract and load data between SAP BW and external systems. |
-| Automated ETL Workflows | Automate data warehouse loading with API-triggered process chains. |
-| Self-Service Analytics | Enable business users to access BW data through Analysis for Office. |
+#### Rate limits (1)
 
-## Integrations
+Published request limits.
 
-| Name | Description |
-|------|-------------|
-| SAP Analytics Cloud | Modern analytics and planning on BW data. |
-| SAP HANA | Native HANA optimization for BW/4HANA. |
-| Microsoft Excel | Analysis for Office integration for enterprise reporting. |
-| SAP Data Intelligence | Data pipeline integration for data lakes and ML workloads. |
+- [Sap Bw Rate Limits](https://apis.io/rate-limits/sap-bw/sap-bw-rate-limits/)
 
-## Maintainers
+#### FinOps (1)
 
-**FN:** Kin Lane
-**Email:** kin@apievangelist.com
+What the API costs to run, by operation.
+
+- [Sap Bw Finops](https://apis.io/finops/sap-bw/sap-bw-finops/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://www.sap.com/products/data-cloud/business-warehouse.html)
+- [Documentation](https://help.sap.com/docs/SAP_BW4HANA)
+- [Getting started](https://learning.sap.com/)
+- [API reference](https://help.sap.com/docs/SAP_BW4HANA/107a6e8a38b74ede94c833ca3b7b6f51/4c22135610cc5791e10000000a15822b.html)
+- [Support](https://support.sap.com/)
+- [Blog](https://pages.community.sap.com/topics/bw4-hana)
+- [Security](https://www.sap.com/about/trust-center/security/incident-management.html)
+- [Compliance](https://www.sap.com/about/trust-center/certification-compliance.html)
+- [Terms of service](https://www.sap.com/about/legal/terms-of-use.html)
+- [Privacy policy](https://www.sap.com/about/legal/privacy.html)
+- [GitHub](https://github.com/SAP)
+- [Status](https://www.sap.com/about/trust-center/cloud-service-status.html)
+
+## API Evangelist rating
+
+**Kin Score 36.5** — thin · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 62.5 |
+| Contract quality | 5.3 |
+| Contract governance | 18.2 |
+| Operational transparency | 52.6 |
+| Developer ergonomics | 47.6 |
+| Access clarity | 36.8 |
+
+**Agent readiness 7.9** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | — |
+| Agentic Access | — |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | documented (partial credit) |
+| OpenAPI Examples | — |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 35.3** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/sap-bw/](https://apis.io/providers/sap-bw/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for SAP BW: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/sap-bw/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
